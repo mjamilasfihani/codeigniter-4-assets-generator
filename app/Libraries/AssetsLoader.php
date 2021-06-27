@@ -67,24 +67,21 @@ class AssetsLoader
 
 	protected $meta = [];
 
-	// constructing the assets first
 	public function __construct(array $userCSS = [], array $userJS = [])
 	{
-		helper('html');
-
-		if (is_null($this->charset))
+		if ($this->charset !== null)
 		{
 			$this->charset = config('App')->charset;
 		}
 
-		if (is_null($this->language))
+		if ($this->language !== null)
 		{
 			$this->language = config('App')->defaultLocale;
 		}
 
-		if (is_null($this->favicon))
+		if ($this->favicon !== null)
 		{
-			$this->favicon = link_tag(base_url('favicon.ico'), 'icon', 'image/ico');
+			$this->favicon = base_url('favicon.ico');
 		}
 
 		$defaultCSS =
@@ -104,27 +101,26 @@ class AssetsLoader
 		$this->js = empty($userJS) ? $defaultJS : $userJS;
 	}
 
-	protected function header()
+	protected function __render($view)
 	{
-		$str  = doctype($this->doctype);
-		$str .= '<html lang="' . $this->language . '">';
-		$str .= '<head>';
-		$str .= '<meta charset="' . $this->charset . '">';
+                helper('html');
+
+		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"> <head> <meta charset="' . $this->charset . '">';
 		
-		// meta
+		// @generate meta begin | under devlopment
+
+                // @generate meta end | under development
 		
-		$str .= $this->favicon;
+		$str .= link_tag($this->favicon, 'icon', mime_content_type($this->favicon));
 		
-		// css
 		if (! empty($this->css))
 		{
-			for ($i=0; $i <count($this->css); $i++)
+			for ($i=0; $i < count($this->css); $i++)
 			{
 				$str .= link_tag($this->css[$i]);
 			}
 		}
 
-		// js
 		if (! empty($this->js))
 		{
 			for ($i=0; $i < count($this->js) ; $i++)
@@ -133,40 +129,31 @@ class AssetsLoader
 			}
 		}
 
-		if ($this->preload)
+		if ($this->preload == true)
 		{
-			$str .= link_tag('https://cdn.jsdelivr.net/gh/loadingio/ldLoader@v1.0.0/dist/ldld.min.css');
-			$str .= script_tag('https://cdn.jsdelivr.net/gh/loadingio/ldLoader@v1.0.0/dist/ldld.min.js');
+			$str .= link_tag('https://cdn.jsdelivr.net/gh/loadingio/ldLoader@v1.0.0/dist/ldld.min.css') . script_tag('https://cdn.jsdelivr.net/gh/loadingio/ldLoader@v1.0.0/dist/ldld.min.js');
 		}
 
-		$str .= '<title>' . $this->title . '</title>';
-		$str .= '</head>';
-		$str .= '<body ' . stringify_attributes($this->attributes) . '>';
+		$str .= '<title>' . $this->title . '</title> </head> <body' . stringify_attributes($this->attributes) . '>';
 
-		if ($this->preload)
+		if ($this->preload == true)
 		{
 			$str .= '<div id="loader" class="ldld full"></div><script type="text/javascript">var ldld = new ldLoader({ root: "#loader" }); ldld.on();</script>';
 		}
 
-		return $str;
-	}
+		$str .= $view;
 
-	protected function footer()
-	{
-		$str  = '';
-
-		if (! is_null($this->cookieBannerURI))
+		if ($this->cookieBannerURI !== null)
 		{
 			$str .= '<script type="text/javascript" src="'.$this->cookieBannerURI.'"></script>';
 		}
 
-		if ($this->preload)
+		if ($this->preload == true)
 		{
 			$str .= '<script type="text/javascript">ldld.off()</script>';
 		}
 
-		$str .= '</body>';
-		$str .= '</html>';
+		$str .= '</body> </html>';
 
 		return $str;
 	}
@@ -184,19 +171,18 @@ class AssetsLoader
 		$this->charset = $config['charset'] ?? $this->charset;
 		$this->language = $config['language'] ?? $this->language;
 		$this->title = $config['title'] ?? $this->title;
-		$this->favicon = link_tag($config['favicon'], 'icon', mime_content_type($config['favicon'])) ?? $this->favicon;
+		$this->favicon = $config['favicon'] ?? $this->favicon;
 	}
 
 	public function meta(array $config = [])
 	{
+                // under development
 		$this->meta = array_merge($this->meta, $config);
 	}
 
 	public function run($view)
 	{
-		$parser = single_service('parser');
-
-		return $parser->renderString($this->header()) . $view . $parser->renderString($this->footer());
+		return single_service('parser')->renderString($this->__render($view));
 	}
 
 }
