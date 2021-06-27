@@ -7,12 +7,12 @@ class Example extends BaseController
 
 	public function index()
 	{
-		return $this->__(view('example_message', ['text' => 'Coming Soon']));
+		return $this->__render(view('example_message', ['text' => 'Coming Soon']));
 	}
 
 	//--------------------------------------------------------------------
 
-	protected function __($view)
+	protected function __render($view)
 	{
 		$theme = new \App\Libraries\AssetsLoader();
 
