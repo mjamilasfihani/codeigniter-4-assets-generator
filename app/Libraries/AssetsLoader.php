@@ -45,7 +45,7 @@ namespace App\Libraries;
  * $theme->html($htmlConfig);
  * $theme->meta($metaConfig);
  *
- * $theme->run();
+ * $theme->run(view('welcome_message'));
  *
  */
 
@@ -69,17 +69,17 @@ class AssetsLoader
 
 	public function __construct(array $userCSS = [], array $userJS = [])
 	{
-		if ($this->charset !== null)
+		if ($this->charset == null)
 		{
 			$this->charset = config('App')->charset;
 		}
 
-		if ($this->language !== null)
+		if ($this->language == null)
 		{
 			$this->language = config('App')->defaultLocale;
 		}
 
-		if ($this->favicon !== null)
+		if ($this->favicon == null)
 		{
 			$this->favicon = base_url('favicon.ico');
 		}
@@ -115,7 +115,7 @@ class AssetsLoader
 		
 		if (! empty($this->css))
 		{
-			for ($i=0; $i < count($this->css); $i++)
+			for ($i = 0; $i < count($this->css); $i++)
 			{
 				$str .= link_tag($this->css[$i]);
 			}
@@ -123,7 +123,7 @@ class AssetsLoader
 
 		if (! empty($this->js))
 		{
-			for ($i=0; $i < count($this->js) ; $i++)
+			for ($i = 0; $i < count($this->js) ; $i++)
 			{
 				$str .= script_tag($this->js[$i]);
 			}
