@@ -69,14 +69,16 @@ class AssetsLoader
 
 	public function __construct(array $userCSS = [], array $userJS = [])
 	{
+                $app = config('App');
+
 		if ($this->charset == null)
 		{
-			$this->charset = config('App')->charset;
+			$this->charset = $app->charset;
 		}
 
 		if ($this->language == null)
 		{
-			$this->language = config('App')->defaultLocale;
+			$this->language = $app->defaultLocale;
 		}
 
 		if ($this->favicon == null)
@@ -103,8 +105,6 @@ class AssetsLoader
 
 	protected function __render($view)
 	{
-                helper('html');
-
 		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"> <head> <meta charset="' . $this->charset . '">';
 		
 		// @generate meta begin | under devlopment
@@ -123,7 +123,7 @@ class AssetsLoader
 
 		if (! empty($this->js))
 		{
-			for ($i = 0; $i < count($this->js) ; $i++)
+			for ($i = 0; $i < count($this->js); $i++)
 			{
 				$str .= script_tag($this->js[$i]);
 			}
@@ -145,7 +145,7 @@ class AssetsLoader
 
 		if ($this->cookieBannerURI !== null)
 		{
-			$str .= '<script type="text/javascript" src="'.$this->cookieBannerURI.'"></script>';
+                        $str .= srcipt_tag($this->cookieBannerURI);
 		}
 
 		if ($this->preload == true)
