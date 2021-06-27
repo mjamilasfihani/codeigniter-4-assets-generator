@@ -14,6 +14,8 @@ class Example extends BaseController
 
 	protected function __render($view)
 	{
+                helper('html');
+
 		$theme = new \App\Libraries\AssetsLoader();
 
 		return $theme->run($view);
