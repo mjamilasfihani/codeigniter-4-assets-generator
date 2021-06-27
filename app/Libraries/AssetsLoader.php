@@ -103,7 +103,7 @@ class AssetsLoader
 		$this->js = empty($userJS) ? $defaultJS : $userJS;
 	}
 
-	protected function __render($view)
+	protected function __header()
 	{
 		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"> <head> <meta charset="' . $this->charset . '">';
 		
@@ -141,11 +141,16 @@ class AssetsLoader
 			$str .= '<div id="loader" class="ldld full"></div><script type="text/javascript">var ldld = new ldLoader({ root: "#loader" }); ldld.on();</script>';
 		}
 
-		$str .= $view;
+                return $str;
+        }
+
+        protected function __footer()
+        {
+		$str = '';
 
 		if ($this->cookieBannerURI !== null)
 		{
-                        $str .= srcipt_tag($this->cookieBannerURI);
+                        $str .= script_tag($this->cookieBannerURI);
 		}
 
 		if ($this->preload == true)
@@ -182,7 +187,7 @@ class AssetsLoader
 
 	public function run($view)
 	{
-		return single_service('parser')->renderString($this->__render($view));
+		return $this->__header() . $view . $this->__footer();
 	}
 
 }
