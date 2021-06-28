@@ -3,7 +3,7 @@
 namespace App\Libraries;
 
 /**
- * General Prototype
+ * Prototype
  *
  * $css = [];
  * $js = [];
@@ -116,9 +116,11 @@ class AssetsLoader
 	{
 		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"> <head> <meta charset="' . $this->charset . '">';
 		
-		// @generate meta begin | under devlopment
+                $_attrName = $this->filterMetaAttrName($this->meta);
+                $_attrHttpEquiv = $this->meta['http-equiv'];
+                $_attrProperty = $this->meta['property'];
 
-                // @generate meta end | under development
+		$str .= $this->generateMetaData();
 		
 		$str .= link_tag($this->favicon, 'icon', mime_content_type($this->favicon));
 		
@@ -171,6 +173,17 @@ class AssetsLoader
 
 		return $str;
 	}
+
+        protected generateMetaData()
+        {
+                return;
+        }
+
+        protected filterMetaAttrName($data)
+        {
+                unset($data['http-equiv'], $data['property']);
+                return $data;
+        }
 
 	public function body(array $config = [])
 	{
