@@ -178,9 +178,20 @@ class AssetsLoader
 		return $str;
 	}
 
-        protected function generateMetaData()
+        protected function generateMetaData(string $name = '', string $content = '', string $type = 'name')
         {
-                return;
+		$str = '';
+						
+		foreach ([['name' => $name, 'content' => $content, 'type' => $type]] as $val)
+		{
+			$type	 = empty($val['type'])    ? '' : $val['type'];
+			$name	 = empty($val['name'])    ? '' : $val['name'];
+			$content = empty($val['content']) ? '' : $val['content'];
+
+			$str .= '<meta '.$type.'="'.$name.'" content="'.$content.'" />';
+		}
+
+		return $str;
         }
 
         protected function filterMetaAttrName($data)
