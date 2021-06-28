@@ -49,11 +49,15 @@ namespace App\Libraries;
  *
  */
 
+// Credits :
+// - css & js by Bootstrap
+// - Preload by loading.io
+
 class AssetsLoader
 {
 
-	protected $css = [https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css];
-	protected $js = [https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js];
+	protected $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'];
+	protected $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'];
 
 	protected $attributes = [];
 	protected $preload = true;
@@ -76,7 +80,7 @@ class AssetsLoader
                 'property' => []
         ];
 
-	public function __construct(array $userCSS = [], array $userJS = [])
+	public function __construct(array $css = [], array $js = [])
 	{
                 $app = config('App');
 
