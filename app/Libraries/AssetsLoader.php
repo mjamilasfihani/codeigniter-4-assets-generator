@@ -206,13 +206,13 @@ class AssetsLoader
 		return $str;
 	}
 
-	protected function filterMetaAttrName($data)
+	protected function filterMetaAttrName(array $meta = [])
 	{
-		unset($data['http-equiv'], $data['property']);
+		unset($meta['http-equiv'], $meta['property']);
 
-		$data['keywords'] = implode(', ', $data['keywords']);
+		$meta['keywords'] = implode(', ', $meta['keywords']);
 
-		return $data;
+		return $meta;
 	}
 
 	public function body(array $config = [])
