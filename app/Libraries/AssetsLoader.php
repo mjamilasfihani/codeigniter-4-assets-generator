@@ -2,6 +2,10 @@
 
 namespace App\Libraries;
 
+// Credits :
+// - css & js by getbootstrap.com
+// - preload by loading.io
+
 /**
  * Prototype
  *
@@ -49,10 +53,6 @@ namespace App\Libraries;
  *
  */
 
-// Credits :
-// - css & js by Bootstrap
-// - Preload by loading.io
-
 class AssetsLoader
 {
 
@@ -70,19 +70,19 @@ class AssetsLoader
 	protected $favicon = null;
 
 	protected $meta =
-        [
-                'description' => 'This is your website description (meta)',
-                'keywords' => [],
-                'author' => null,
-                'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
+	[
+		'description' => 'This is your website description (meta)',
+		'keywords' => [],
+		'author' => null,
+		'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
 
-                'http-equiv' => [],
-                'property' => []
-        ];
+		'http-equiv' => [],
+		'property' => []
+	];
 
 	public function __construct(array $css = [], array $js = [])
 	{
-                $app = config('App');
+		$app = config('App');
 
 		if ($this->charset == null)
 		{
@@ -99,22 +99,22 @@ class AssetsLoader
 			$this->favicon = base_url('favicon.ico');
 		}
 
-                if (empty($css) === false)
-                {
-                        $this->css = $css;
-                }
+		if (empty($css) === false)
+		{
+			$this->css = $css;
+		}
 
-                if (empty($js) === false)
-                {
-                        $this->js = $js;
-                }
+		if (empty($js) === false)
+		{
+			$this->js = $js
+		}
 	}
 
 	protected function __header()
 	{
 		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"> <head> <meta charset="' . $this->charset . '">';
-		
-	        if (empty($this->filterMetaAttrName($this->meta)) === false)
+
+		if (empty($this->filterMetaAttrName($this->meta)) === false)
 		{
 			foreach ($this->filterMetaAttrName($this->meta) as $name => $value)
 			{
@@ -122,7 +122,7 @@ class AssetsLoader
 			}
 		}
 
-                if (empty($this->meta['http-equiv']) === false)
+		if (empty($this->meta['http-equiv']) === false)
 		{
 			foreach ($this->meta['http-equiv'] as $name => $value)
 			{
@@ -130,7 +130,7 @@ class AssetsLoader
 			}
 		}
 
-                if (empty($this->meta['property']) === false)
+		if (empty($this->meta['property']) === false)
 		{
 			foreach ($this->meta['property'] as $name => $value)
 			{
@@ -168,16 +168,16 @@ class AssetsLoader
 			$str .= '<div id="loader" class="ldld full"></div><script type="text/javascript">var ldld = new ldLoader({ root: "#loader" }); ldld.on();</script>';
 		}
 
-                return $str;
-        }
+		return $str;
+	}
 
-        protected function __footer()
-        {
+	protected function __footer()
+	{
 		$str = '';
 
 		if ($this->cookieBannerURI !== null)
 		{
-                        $str .= script_tag($this->cookieBannerURI);
+			$str .= script_tag($this->cookieBannerURI);
 		}
 
 		if ($this->preload == true)
@@ -190,8 +190,8 @@ class AssetsLoader
 		return $str;
 	}
 
-        protected function generateMetaData(string $name = '', string $content = '', string $type = 'name')
-        {
+	protected function generateMetaData(string $name = '', string $content = '', string $type = 'name')
+	{
 		$str = '';
 						
 		foreach ([['name' => $name, 'content' => $content, 'type' => $type]] as $val)
@@ -204,16 +204,16 @@ class AssetsLoader
 		}
 
 		return $str;
-        }
+	}
 
-        protected function filterMetaAttrName($data)
-        {
-                unset($data['http-equiv'], $data['property']);
+	protected function filterMetaAttrName($data)
+	{
+		unset($data['http-equiv'], $data['property']);
 
-                $data['keywords'] = implode(', ', $data['keywords']);
+		$data['keywords'] = implode(', ', $data['keywords']);
 
-                return $data;
-        }
+		return $data;
+	}
 
 	public function body(array $config = [])
 	{
