@@ -123,9 +123,31 @@ class AssetsLoader
                 $_attrName = $this->filterMetaAttrName($this->meta);
                 $_attrHttpEquiv = $this->meta['http-equiv'];
                 $_attrProperty = $this->meta['property'];
-
-		$str .= $this->generateMetaData();
 		
+	        if (empty($_attrName) === false)
+		{
+			foreach ($_attrName as $name => $value)
+			{
+				$str .= $this->generateMetaData($name, $value);
+			}
+		}
+
+                if (empty($_attrHttpEquiv) === false)
+		{
+			foreach ($_attrHttpEquiv as $name => $value)
+			{
+				$str .= $this->generateMetaData($name, $value, 'http-equiv');
+			}
+		}
+
+                if (empty($_attrProperty) === false)
+		{
+			foreach ($_attrProperty as $name => $value)
+			{
+				$str .= $this->generateMetaData($name, $value, 'property');
+			}
+		}
+
 		$str .= link_tag($this->favicon, 'icon', mime_content_type($this->favicon));
 		
 		if (empty($this->css) === false)
@@ -197,6 +219,9 @@ class AssetsLoader
         protected function filterMetaAttrName($data)
         {
                 unset($data['http-equiv'], $data['property']);
+
+                $data['keywords'] = implode(', ', $data['keywords']);
+
                 return $data;
         }
 
