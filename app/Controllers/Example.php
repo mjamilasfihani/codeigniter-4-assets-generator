@@ -20,7 +20,7 @@ class Example extends BaseController
 		// Calling the library
 		$template = new \App\Libraries\AssetsLoader();
 
-		// Return it
+		// Render it
 		return $template->render($view);
 	}
 
