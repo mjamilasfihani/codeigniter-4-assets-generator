@@ -34,7 +34,7 @@ namespace App\Libraries;
  * [
  * 		'description' => 'This is your website description (meta)',
  *		'keywords' => [],
- *		'author' => null,
+ *		'author' => '',
  *		'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
  *
  *		// @start add another meta with 'name' attribute
