@@ -17,7 +17,7 @@ namespace App\Libraries;
  * $body =
  * [
  * 		'attributes' => [],
- *		'preload' => true,
+ *		'preload' => false,
  *		'cookieBannerURI' => null
  * ];
  *
@@ -60,7 +60,7 @@ class AssetsLoader
 	protected $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'];
 
 	protected $attributes = [];
-	protected $preload = true;
+	protected $preload = false;
 	protected $cookieBannerURI = null;
 
 	protected $doctype = 'html5';
@@ -73,7 +73,7 @@ class AssetsLoader
 	[
 		'description' => 'This is your website description (meta)',
 		'keywords' => [],
-		'author' => null,
+		'author' => '',
 		'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
 
 		'http-equiv' => [],
@@ -106,13 +106,13 @@ class AssetsLoader
 
 		if (empty($js) === false)
 		{
-			$this->js = $js
+			$this->js = $js;
 		}
 	}
 
 	protected function __header()
 	{
-		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"> <head> <meta charset="' . $this->charset . '">';
+		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"><head><meta charset="' . $this->charset . '">';
 
 		if (empty($this->filterMetaAttrName($this->meta)) === false)
 		{
@@ -138,7 +138,7 @@ class AssetsLoader
 			}
 		}
 
-		$str .= link_tag($this->favicon, 'icon', mime_content_type($this->favicon));
+		$str .= link_tag($this->favicon, 'icon', parse_url($this->favicon, PHP_URL_PATH));
 		
 		if (empty($this->css) === false)
 		{
@@ -161,7 +161,7 @@ class AssetsLoader
 			$str .= link_tag('https://cdn.jsdelivr.net/gh/loadingio/ldLoader@v1.0.0/dist/ldld.min.css') . script_tag('https://cdn.jsdelivr.net/gh/loadingio/ldLoader@v1.0.0/dist/ldld.min.js');
 		}
 
-		$str .= '<title>' . $this->title . '</title> </head> <body' . stringify_attributes($this->attributes) . '>';
+		$str .= '<title>' . $this->title . '</title></head><body' . stringify_attributes($this->attributes) . '>';
 
 		if ($this->preload == true)
 		{
@@ -185,7 +185,7 @@ class AssetsLoader
 			$str .= '<script type="text/javascript">ldld.off()</script>';
 		}
 
-		$str .= '</body> </html>';
+		$str .= '</body></html>';
 
 		return $str;
 	}
