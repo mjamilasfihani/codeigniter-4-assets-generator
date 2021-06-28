@@ -120,29 +120,25 @@ class AssetsLoader
 	{
 		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"> <head> <meta charset="' . $this->charset . '">';
 		
-                $_attrName = $this->filterMetaAttrName($this->meta);
-                $_attrHttpEquiv = $this->meta['http-equiv'];
-                $_attrProperty = $this->meta['property'];
-		
-	        if (empty($_attrName) === false)
+	        if (empty($this->filterMetaAttrName($this->meta)) === false)
 		{
-			foreach ($_attrName as $name => $value)
+			foreach ($this->filterMetaAttrName($this->meta) as $name => $value)
 			{
 				$str .= $this->generateMetaData($name, $value);
 			}
 		}
 
-                if (empty($_attrHttpEquiv) === false)
+                if (empty($this->meta['http-equiv']) === false)
 		{
-			foreach ($_attrHttpEquiv as $name => $value)
+			foreach ($this->meta['http-equiv'] as $name => $value)
 			{
 				$str .= $this->generateMetaData($name, $value, 'http-equiv');
 			}
 		}
 
-                if (empty($_attrProperty) === false)
+                if (empty($this->meta['property']) === false)
 		{
-			foreach ($_attrProperty as $name => $value)
+			foreach ($this->meta['property'] as $name => $value)
 			{
 				$str .= $this->generateMetaData($name, $value, 'property');
 			}
