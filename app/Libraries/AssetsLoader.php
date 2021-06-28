@@ -52,18 +52,8 @@ namespace App\Libraries;
 class AssetsLoader
 {
 
-	protected $css =
-        [
-		'https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.css',
-                'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.css'
-        ];
-
-	protected $js =
-        [
-		'https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.js',
-		'https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/popper.js',
-		'https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.js'
-        ];
+	protected $css = [https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css];
+	protected $js = [https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js];
 
 	protected $attributes = [];
 	protected $preload = true;
