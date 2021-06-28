@@ -14,11 +14,14 @@ class Example extends BaseController
 
 	protected function __render($view)
 	{
+                // Load the html helper
                 helper('html');
 
-		$theme = new \App\Libraries\AssetsLoader();
+                // Calling the library
+		$template = new \App\Libraries\AssetsLoader();
 
-		return $theme->run($view);
+                // Return it
+		return $template->render($view);
 	}
 
 }
