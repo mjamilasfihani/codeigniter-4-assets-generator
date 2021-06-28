@@ -45,7 +45,7 @@ namespace App\Libraries;
  * $theme->html($htmlConfig);
  * $theme->meta($metaConfig);
  *
- * $theme->run(view('welcome_message'));
+ * $theme->render(view('welcome_message'));
  *
  */
 
@@ -206,7 +206,7 @@ class AssetsLoader
 		$this->meta = array_merge($this->meta, $config);
 	}
 
-	public function run($view)
+	public function render($view)
 	{
 		return $this->__header() . $view . $this->__footer();
 	}
