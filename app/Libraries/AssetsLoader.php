@@ -52,8 +52,18 @@ namespace App\Libraries;
 class AssetsLoader
 {
 
-	protected $css = [];
-	protected $js = [];
+	protected $css =
+        [
+		'https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.css',
+                'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.css'
+        ];
+
+	protected $js =
+        [
+		'https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.js',
+		'https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/popper.js',
+		'https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.js'
+        ];
 
 	protected $attributes = [];
 	protected $preload = true;
@@ -95,21 +105,15 @@ class AssetsLoader
 			$this->favicon = base_url('favicon.ico');
 		}
 
-		$defaultCSS =
-		[
-			'https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.css',
-			'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.css'
-		];
+                if (empty($css) === false)
+                {
+                        $this->css = $css;
+                }
 
-		$defaultJS =
-		[
-			'https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.js',
-			'https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/popper.js',
-			'https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.js'
-		];
-
-		$this->css = empty($userCSS) ? $defaultCSS : $userCSS;
-		$this->js = empty($userJS) ? $defaultJS : $userJS;
+                if (empty($js) === false)
+                {
+                        $this->js = $js;
+                }
 	}
 
 	protected function __header()
