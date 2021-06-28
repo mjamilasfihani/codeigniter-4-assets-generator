@@ -174,12 +174,12 @@ class AssetsLoader
 		return $str;
 	}
 
-        protected generateMetaData()
+        protected function generateMetaData()
         {
                 return;
         }
 
-        protected filterMetaAttrName($data)
+        protected function filterMetaAttrName($data)
         {
                 unset($data['http-equiv'], $data['property']);
                 return $data;
