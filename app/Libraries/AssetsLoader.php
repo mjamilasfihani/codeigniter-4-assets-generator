@@ -8,16 +8,16 @@ namespace App\Libraries;
  * $css = [];
  * $js = [];
  *
- * $theme = new App\Libraries\AssetsLoader($css, $js);
+ * $template = new App\Libraries\AssetsLoader($css, $js);
  *
- * $bodyConfig =
+ * $body =
  * [
  * 		'attributes' => [],
  *		'preload' => true,
  *		'cookieBannerURI' => null
  * ];
  *
- * $htmlConfig =
+ * $html =
  * [
  * 		'doctype' => 'html5',
  *		'charset' => null,
@@ -26,7 +26,7 @@ namespace App\Libraries;
  *		'favicon' => null
  * ];
  *
- * $metaConfig =
+ * $meta =
  * [
  * 		'description' => 'This is your website description (meta)',
  *		'keywords' => [],
@@ -41,11 +41,11 @@ namespace App\Libraries;
  *		'property' => []  // this is meta with 'property' attribute
  * ];
  *
- * $theme->body($bodyConfig);
- * $theme->html($htmlConfig);
- * $theme->meta($metaConfig);
+ * $template->body($body);
+ * $template->html($html);
+ * $template->meta($meta);
  *
- * $theme->render(view('welcome_message'));
+ * $template->render(view('welcome_message'));
  *
  */
 
