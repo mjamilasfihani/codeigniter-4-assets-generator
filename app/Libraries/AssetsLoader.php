@@ -65,7 +65,16 @@ class AssetsLoader
 	protected $title = 'Your Website Title';
 	protected $favicon = null;
 
-	protected $meta = [];
+	protected $meta =
+        [
+                'description' => 'This is your website description (meta)',
+                'keywords' => [],
+                'author' => null,
+                'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
+
+                'http-equiv' => [],
+                'property' => []
+        ];
 
 	public function __construct(array $userCSS = [], array $userJS = [])
 	{
@@ -113,7 +122,7 @@ class AssetsLoader
 		
 		$str .= link_tag($this->favicon, 'icon', mime_content_type($this->favicon));
 		
-		if (! empty($this->css))
+		if (empty($this->css) === false)
 		{
 			for ($i = 0; $i < count($this->css); $i++)
 			{
@@ -121,7 +130,7 @@ class AssetsLoader
 			}
 		}
 
-		if (! empty($this->js))
+		if (empty($this->js) === false)
 		{
 			for ($i = 0; $i < count($this->js); $i++)
 			{
@@ -181,7 +190,6 @@ class AssetsLoader
 
 	public function meta(array $config = [])
 	{
-                // under development
 		$this->meta = array_merge($this->meta, $config);
 	}
 
