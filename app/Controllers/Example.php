@@ -7,12 +7,12 @@ class Example extends BaseController
 
 	public function index()
 	{
-		return $this->__render(view('example_message', ['text' => 'Coming Soon']));
+		return $this->__render('example_message', ['text' => 'Coming Soon']);
 	}
 
 	//--------------------------------------------------------------------
 
-	protected function __render($view)
+	protected function __render(string $name = '', array $data = [])
 	{
 		// Load the html helper
 		helper('html');
@@ -21,7 +21,7 @@ class Example extends BaseController
 		$template = new \App\Libraries\AssetsLoader();
 
 		// Render it
-		return $template->render($view);
+		return $template->render(view($name, $data));
 	}
 
 }
