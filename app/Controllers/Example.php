@@ -12,7 +12,7 @@ class Example extends BaseController
 
 	//--------------------------------------------------------------------
 
-	protected function __render(string $name = '', array $data = [])
+	protected function __render(string $name = '', array $data = [], array $options = [])
 	{
 		// Load the html helper
 		helper('html');
@@ -21,7 +21,7 @@ class Example extends BaseController
 		$template = new \App\Libraries\AssetsLoader();
 
 		// Render it
-		return $template->render(view($name, $data));
+		return $template->render(view($name, $data, $options));
 	}
 
 }
