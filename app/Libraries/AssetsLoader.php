@@ -109,6 +109,8 @@ class AssetsLoader
 	 *   	  'class' => 'landing-page',
 	 *		  'id'    => 'welcome'
 	 *   ];
+         *
+         *   $template->body(['attributes' => $attributes]);
 	 *
 	 * It will be
 	 *
@@ -138,7 +140,7 @@ class AssetsLoader
 	 * --------------------------------------------------------------------------
 	 *
 	 * If you need a cookie banner, feel free to set a value at here.
-	 * BHPGenerator's cookie banner is using Cookie-Script.Com (suggestion).
+	 * This library cookie banner is using Cookie-Script.Com (suggestion).
 	 *
 	 * Parameter is https://cdn.cookie-script.com/s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.js
 	 * or just copy your js url and paste in here (because Cookie-Script has GEO features).
@@ -473,7 +475,7 @@ class AssetsLoader
 	/**
 	 * Render
 	 *
-	 * @param  mix    $view
+	 * @param  string $view
 	 * @return string
 	 */
 	public function render($view)
