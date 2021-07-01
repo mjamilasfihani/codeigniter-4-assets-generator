@@ -293,6 +293,11 @@ class AssetsLoader
 		}
 	}
 
+	/**
+	 * Header section
+	 *
+	 * @return string
+	 */
 	protected function __header()
 	{
 		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"><head><meta charset="' . $this->charset . '">';
@@ -354,6 +359,11 @@ class AssetsLoader
 		return $str;
 	}
 
+	/**
+	 * Footer section
+	 *
+	 * @return string
+	 */
 	protected function __footer()
 	{
 		$str = '';
@@ -373,6 +383,14 @@ class AssetsLoader
 		return $str;
 	}
 
+	/**
+	 * Generating Meta Data
+	 *
+	 * @param  string $name
+	 * @param  string $content
+	 * @param  string $type
+	 * @return string
+	 */
 	protected function generateMetaData(string $name = '', string $content = '', string $type = 'name')
 	{
 		$str = '';
@@ -389,6 +407,15 @@ class AssetsLoader
 		return $str;
 	}
 
+	/**
+	 * Filter the Meta Data
+	 *
+	 * Remove the meta http-equiv and property,
+	 * and implode the meta keywords.
+	 *
+	 * @param  array $meta
+	 * @return array
+	 */
 	protected function filterMetaAttrName(array $meta = [])
 	{
 		unset($meta['http-equiv'], $meta['property']);
@@ -400,6 +427,11 @@ class AssetsLoader
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Body
+	 *
+	 * @param array $config
+	 */
 	public function body(array $config = [])
 	{
 		$this->attributes = $config['attributes'] ?? $this->attributes;
@@ -407,6 +439,11 @@ class AssetsLoader
 		$this->cookieBannerURI = $config['cookieBannerURI'] ?? $this->cookieBannerURI;
 	}
 
+	/**
+	 * Html
+	 *
+	 * @param array $config
+	 */
 	public function html(array $config = [])
 	{
 		$this->doctype = $config['doctype'] ?? $this->doctype;
@@ -416,6 +453,11 @@ class AssetsLoader
 		$this->favicon = $config['favicon'] ?? $this->favicon;
 	}
 
+	/**
+	 * Meta
+	 *
+	 * @param array $config
+	 */
 	public function meta(array $config = [])
 	{
 		$this->meta = array_merge($this->meta, $config);
@@ -423,6 +465,12 @@ class AssetsLoader
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * Render
+	 *
+	 * @param  mix    $view
+	 * @return string
+	 */
 	public function render($view)
 	{
 		return $this->__header() . $view . $this->__footer();
