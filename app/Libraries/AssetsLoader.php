@@ -26,10 +26,6 @@
 
 namespace App\Libraries;
 
-// Credits :
-// - css & js by getbootstrap.com
-// - preload by loading.io
-
 /**
  * Prototype
  *
@@ -80,19 +76,170 @@ namespace App\Libraries;
 class AssetsLoader
 {
 
+	/**
+	 * Default CSS
+	 *
+	 * The default CSS is using Bootsrap v5,
+	 * visit https://getbootstrap.com for more information.
+	 *
+	 * @var array
+	 */
 	protected $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'];
+
+	/**
+	 * Default JS
+	 *
+	 * The default JS is using Bootstrap v5,
+	 * visit https://getbootstrap.com for more information.
+	 *
+	 * @var array
+	 */
 	protected $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'];
 
+	/**
+	 * --------------------------------------------------------------------------
+	 * Body Attributes
+	 * --------------------------------------------------------------------------
+	 *
+	 * If you have some tag body attributes, you can add it here.
+	 *
+	 * Prototype
+	 *
+	 *   $attributes = [
+	 *   	  'class' => 'landing-page',
+	 *		  'id'    => 'welcome'
+	 *   ];
+	 *
+	 * It will be
+	 *
+	 *   <body class="landing-page" id="welcome">
+	 *
+	 * @var array
+	 */
 	protected $attributes = [];
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * PreLoad Page
+	 * --------------------------------------------------------------------------
+	 *
+	 * If you dont want use preloader screen, set to false. The default is true
+	 *
+	 * This preload is using LoadingIo library,
+	 * visit https://loading.io for more information.
+	 *
+	 * @var bool
+	 */
 	protected $preload = false;
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Cookie Banner
+	 * --------------------------------------------------------------------------
+	 *
+	 * If you need a cookie banner, feel free to set a value at here.
+	 * BHPGenerator's cookie banner is using Cookie-Script.Com (suggestion).
+	 *
+	 * Parameter is https://cdn.cookie-script.com/s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.js
+	 * or just copy your js url and paste in here (because Cookie-Script has GEO features).
+	 *
+	 * If your website isn't have the quality to use cookie, leave it blank.
+	 *
+	 * @var string
+	 */
 	protected $cookieBannerURI = null;
 
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Doctype Declaration
+	 * --------------------------------------------------------------------------
+	 *
+	 * All HTML documents must start with a <!DOCTYPE> declaration.
+	 * The declaration is not an HTML tag. It is an "information" to the browser
+	 * about what document type to expect. - W3SCHOOLS.COM
+	 *
+	 * The default value is 'html5' but you can fill it based on your needed.
+	 * See the available list in CodeIgniter userguide.
+	 *
+	 * @var string
+	 */
 	protected $doctype = 'html5';
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Meta Charset
+	 * --------------------------------------------------------------------------
+	 *
+	 * To display an HTML page correctly, a web browser must know the character
+	 * set used in the page. - W3SCHOOLS.COM
+	 *
+	 * In modern browser or HTML5 the default charset is UTF-8, if you have
+	 * another option it's up to you. Leave it blank it will use charset from
+	 * app/Confif/App.php
+	 *
+	 * @var string
+	 */
 	protected $charset = null;
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Page Language
+	 * --------------------------------------------------------------------------
+	 *
+	 * You should always include the lang attribute inside the <html> tag,
+	 * to declare the language of the Web page. This is meant to assist
+	 * search engines and browsers. - W3SCHOOLS.COM
+	 *
+	 * You could set this variable as you want. Leave it blank it will use
+	 * defaultLocale from app/Config/App.php
+	 *
+	 * @var string
+	 */
 	protected $language = null;
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Web Title
+	 * --------------------------------------------------------------------------
+	 *
+	 * The contents of a page title is very important for search engine
+	 * optimization (SEO)! The page title is used by search engine algorithms to
+	 * decide the order when listing pages in search results. - W3SCHOOLS.COM
+	 *
+	 * @var string
+	 */
 	protected $title = 'Your Website Title';
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Favicon
+	 * --------------------------------------------------------------------------
+	 *
+	 * Leave it blank it will use default protocol base_url('favicon.ico') or
+	 * fill it with your own link and the type attribute will auto detect.
+	 *
+	 * @var string
+	 */
 	protected $favicon = null;
 
+	/**
+	 * --------------------------------------------------------------------------
+	 * Meta
+	 * --------------------------------------------------------------------------
+	 *
+	 * If you have your own meta put it here. There is 3 types attribute of meta : name,
+	 * http-equiv and property.
+	 *
+	 * This config will generate
+	 *
+	 *   name attribute       --> <meta name="name" content="..." />
+	 *   http-equiv attribute --> <meta http-equiv="name" content="..."/>
+	 *   property attribute   --> <meta property="name" content="..."/>
+	 *
+	 * @see https://gist.github.com/lancejpollard/1978404
+	 * @var array
+	 */
 	protected $meta =
 	[
 		'description' => 'This is your website description (meta)',
@@ -104,30 +251,42 @@ class AssetsLoader
 		'property' => []
 	];
 
+	/**
+	 * Constructor
+	 *
+	 * @param array $css []
+	 * @param array $js  []
+	 */
 	public function __construct(array $css = [], array $js = [])
 	{
+		// Load the config from app/Config/App.php
 		$app = config('App');
 
+		// Set the config of charset
 		if ($this->charset == null)
 		{
 			$this->charset = $app->charset;
 		}
 
+		// Set the config of language
 		if ($this->language == null)
 		{
 			$this->language = $app->defaultLocale;
 		}
 
+		// Set the config of favicon
 		if ($this->favicon == null)
 		{
 			$this->favicon = base_url('favicon.ico');
 		}
 
+		// Set the config of CSS
 		if (empty($css) === false)
 		{
 			$this->css = $css;
 		}
 
+		// Set the config of JS
 		if (empty($js) === false)
 		{
 			$this->js = $js;
@@ -239,6 +398,8 @@ class AssetsLoader
 		return $meta;
 	}
 
+	//--------------------------------------------------------------------
+
 	public function body(array $config = [])
 	{
 		$this->attributes = $config['attributes'] ?? $this->attributes;
@@ -259,6 +420,8 @@ class AssetsLoader
 	{
 		$this->meta = array_merge($this->meta, $config);
 	}
+
+	//--------------------------------------------------------------------
 
 	public function render($view)
 	{
