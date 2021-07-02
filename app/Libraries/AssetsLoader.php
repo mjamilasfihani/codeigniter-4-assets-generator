@@ -29,9 +29,9 @@ namespace App\Libraries;
 /**
  * Prototype
  *
- * $css = [];
- * $js = [];
- * $jquery = '';
+ * $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.css'];
+ * $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.js'];
+ * $jquery = 'https://code.jquery.com/jquery-3.6.0.min.js';
  *
  * $template = new App\Libraries\AssetsLoader($css, $js, $jquery);
  *
