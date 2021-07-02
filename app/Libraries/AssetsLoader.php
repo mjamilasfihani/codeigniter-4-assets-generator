@@ -328,12 +328,7 @@ class AssetsLoader
 			}
 		}
 
-		$uri  = new \CodeIgniter\HTTP\URI($this->favicon);
-		$mime = $uri->getSegment($uri->getTotalSegments());
-
-		$str .= link_tag($this->favicon, 'icon', mime_content_type($mime));
-
-		unset($uri, $mime);
+		$str .= link_tag($this->favicon, 'icon', mime_content_type(basename($this->favicon)));
 		
 		if (empty($this->css) === false)
 		{
