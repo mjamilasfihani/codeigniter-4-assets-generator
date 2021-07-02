@@ -31,8 +31,9 @@ namespace App\Libraries;
  *
  * $css = [];
  * $js = [];
+ * $jquery = '';
  *
- * $template = new App\Libraries\AssetsLoader($css, $js);
+ * $template = new App\Libraries\AssetsLoader($css, $js, $jquery);
  *
  * $body =
  * [
@@ -70,7 +71,6 @@ namespace App\Libraries;
  * $template->meta($meta);
  *
  * $template->render(view('welcome_message'));
- *
  */
 
 class AssetsLoader
@@ -84,7 +84,7 @@ class AssetsLoader
 	 *
 	 * @var array
 	 */
-	protected $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'];
+	protected $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.css'];
 
 	/**
 	 * Default JS
@@ -94,7 +94,17 @@ class AssetsLoader
 	 *
 	 * @var array
 	 */
-	protected $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'];
+	protected $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.js'];
+
+	/**
+	 * Default jQuery
+	 *
+	 * jQuery is need for preloader to work correctly, we use
+	 * v3.6.0 and min version.
+	 *
+	 * @var string
+	 */
+	protected $jquery = 'https://code.jquery.com/jquery-3.6.0.min.js';
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -109,8 +119,8 @@ class AssetsLoader
 	 *   	  'class' => 'landing-page',
 	 *		  'id'    => 'welcome'
 	 *   ];
-         *
-         *   $template->body(['attributes' => $attributes]);
+	 *
+	 *   $template->body(['attributes' => $attributes]);
 	 *
 	 * It will be
 	 *
@@ -151,7 +161,6 @@ class AssetsLoader
 	 */
 	protected $cookieBannerURI = null;
 
-
 	/**
 	 * --------------------------------------------------------------------------
 	 * Doctype Declaration
@@ -178,7 +187,7 @@ class AssetsLoader
 	 *
 	 * In modern browser or HTML5 the default charset is UTF-8, if you have
 	 * another option it's up to you. Leave it blank it will use charset from
-	 * app/Confif/App.php
+	 * app/Config/App.php
 	 *
 	 * @var string
 	 */
@@ -259,7 +268,7 @@ class AssetsLoader
 	 * @param array $css []
 	 * @param array $js  []
 	 */
-	public function __construct(array $css = [], array $js = [])
+	public function __construct(array $css = [], array $js = [], string $jquery = null)
 	{
 		// Load the config from app/Config/App.php
 		$app = config('App');
@@ -293,6 +302,12 @@ class AssetsLoader
 		{
 			$this->js = $js;
 		}
+
+		// Set the jQuery
+		if ($jquery !== null)
+		{
+			$this->jquery = $jquery;
+		}
 	}
 
 	/**
@@ -304,11 +319,11 @@ class AssetsLoader
 	{
 		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"><head><meta charset="' . $this->charset . '">';
 
-		if (empty($this->filterMetaAttrName($this->meta)) === false)
+		if (empty($this->_metaFilterName($this->meta)) === false)
 		{
-			foreach ($this->filterMetaAttrName($this->meta) as $name => $value)
+			foreach ($this->_metaFilterName($this->meta) as $name => $value)
 			{
-				$str .= $this->generateMetaData($name, $value);
+				$str .= $this->_metaTagGenerator($name, $value);
 			}
 		}
 
@@ -316,7 +331,7 @@ class AssetsLoader
 		{
 			foreach ($this->meta['http-equiv'] as $name => $value)
 			{
-				$str .= $this->generateMetaData($name, $value, 'http-equiv');
+				$str .= $this->_metaTagGenerator($name, $value, 'http-equiv');
 			}
 		}
 
@@ -324,7 +339,7 @@ class AssetsLoader
 		{
 			foreach ($this->meta['property'] as $name => $value)
 			{
-				$str .= $this->generateMetaData($name, $value, 'property');
+				$str .= $this->_metaTagGenerator($name, $value, 'property');
 			}
 		}
 
@@ -338,6 +353,11 @@ class AssetsLoader
 			}
 		}
 
+		if ($this->preload == true)
+		{
+			$str .= script_tag($this->jquery);
+		}
+
 		if (empty($this->js) === false)
 		{
 			for ($i = 0; $i < count($this->js); $i++)
@@ -348,14 +368,14 @@ class AssetsLoader
 
 		if ($this->preload == true)
 		{
-			$str .= link_tag('https://cdn.jsdelivr.net/gh/loadingio/ldLoader@v1.0.0/dist/ldld.min.css') . script_tag('https://cdn.jsdelivr.net/gh/loadingio/ldLoader@v1.0.0/dist/ldld.min.js');
+			$str .= '<style type="text/css"> .preloader {position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background-color: #fff; } .loading {position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font: 14px arial; } </style>';
 		}
 
 		$str .= '<title>' . $this->title . '</title></head><body' . stringify_attributes($this->attributes) . '>';
 
 		if ($this->preload == true)
 		{
-			$str .= '<div id="loader" class="ldld full"></div><script type="text/javascript">var ldld = new ldLoader({ root: "#loader" }); ldld.on();</script>';
+			$str .= '<div class="preloader"> <div class="loading"> <img src="..." width="86"> <p style="font-size: 1.0rem">Please Wait</p> </div> </div>';
 		}
 
 		return $str;
@@ -377,13 +397,15 @@ class AssetsLoader
 
 		if ($this->preload == true)
 		{
-			$str .= '<script type="text/javascript">ldld.off()</script>';
+			$str .= '<script type="text/javascript">$(document).ready(function(){$(".preloader").fadeOut(); })</script>';
 		}
 
 		$str .= '</body></html>';
 
 		return $str;
 	}
+
+	//--------------------------------------------------------------------
 
 	/**
 	 * Generating Meta Data
@@ -393,7 +415,7 @@ class AssetsLoader
 	 * @param  string $type
 	 * @return string
 	 */
-	protected function generateMetaData(string $name = '', string $content = '', string $type = 'name')
+	protected function _metaTagGenerator(string $name = '', string $content = '', string $type = 'name')
 	{
 		$str = '';
 						
@@ -418,7 +440,7 @@ class AssetsLoader
 	 * @param  array $meta
 	 * @return array
 	 */
-	protected function filterMetaAttrName(array $meta = [])
+	protected function _metaFilterName(array $meta = [])
 	{
 		unset($meta['http-equiv'], $meta['property']);
 
