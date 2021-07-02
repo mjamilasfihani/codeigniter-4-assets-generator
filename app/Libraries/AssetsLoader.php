@@ -70,7 +70,7 @@ namespace App\Libraries;
  * $template->html($html);
  * $template->meta($meta);
  *
- * $template->render(view('welcome_message'));
+ * return $template->render(view('welcome_message'));
  */
 
 class AssetsLoader
