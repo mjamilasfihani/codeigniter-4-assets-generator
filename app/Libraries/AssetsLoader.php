@@ -353,13 +353,13 @@ class AssetsLoader
 			}
 		}
 
+		if ($this->preload == true)
+		{
+			$str .= script_tag($this->jquery);
+		}
+
 		if (empty($this->js) === false)
 		{
-			if ($this->preload == true)
-			{
-				#$this->js = array_merge($this->js, [$this->jquery]);
-			}
-
 			for ($i = 0; $i < count($this->js); $i++)
 			{
 				$str .= script_tag($this->js[$i]);
