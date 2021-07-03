@@ -33,7 +33,7 @@ namespace App\Libraries;
  * $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.js'];
  * $jquery = 'https://code.jquery.com/jquery-3.6.0.min.js';
  *
- * $template = new App\Libraries\AssetsLoader($css, $js, $jquery);
+ * $template = new \App\Libraries\AssetsLoader($css, $js, $jquery);
  *
  * $body =
  * [
@@ -82,7 +82,7 @@ class AssetsLoader
 	 * The default CSS is using Bootsrap v5,
 	 * visit https://getbootstrap.com for more information.
 	 *
-	 * @var array
+	 * @var array | empty
 	 */
 	protected $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.css'];
 
@@ -92,7 +92,7 @@ class AssetsLoader
 	 * The default JS is using Bootstrap v5,
 	 * visit https://getbootstrap.com for more information.
 	 *
-	 * @var array
+	 * @var array | empty
 	 */
 	protected $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.js'];
 
@@ -102,7 +102,7 @@ class AssetsLoader
 	 * jQuery is need for preloader to work correctly, we use
 	 * v3.6.0 and min version.
 	 *
-	 * @var string
+	 * @var string | null
 	 */
 	protected $jquery = 'https://code.jquery.com/jquery-3.6.0.min.js';
 
@@ -113,20 +113,7 @@ class AssetsLoader
 	 *
 	 * If you have some tag body attributes, you can add it here.
 	 *
-	 * Prototype
-	 *
-	 *   $attributes = [
-	 *   	  'class' => 'landing-page',
-	 *		  'id'    => 'welcome'
-	 *   ];
-	 *
-	 *   $template->body(['attributes' => $attributes]);
-	 *
-	 * It will be
-	 *
-	 *   <body class="landing-page" id="welcome">
-	 *
-	 * @var array
+	 * @var array | empty
 	 */
 	protected $attributes = [];
 
@@ -135,12 +122,9 @@ class AssetsLoader
 	 * PreLoad Page
 	 * --------------------------------------------------------------------------
 	 *
-	 * If you dont want use preloader screen, set to false. The default is true
+	 * If you want to use preloader screen, set to true. The default is false.
 	 *
-	 * This preload is using LoadingIo library,
-	 * visit https://loading.io for more information.
-	 *
-	 * @var bool
+	 * @var bool | false
 	 */
 	protected $preload = false;
 
@@ -153,11 +137,11 @@ class AssetsLoader
 	 * This library cookie banner is using Cookie-Script.Com (suggestion).
 	 *
 	 * Parameter is https://cdn.cookie-script.com/s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.js
-	 * or just copy your js url and paste in here (because Cookie-Script has GEO features).
+	 * or just copy your js url and paste in here.
 	 *
-	 * If your website isn't have the quality to use cookie, leave it blank.
+	 * If your website isn't have the quality to use cookie, leave it null.
 	 *
-	 * @var string
+	 * @var string | null
 	 */
 	protected $cookieBannerURI = null;
 
@@ -186,10 +170,10 @@ class AssetsLoader
 	 * set used in the page. - W3SCHOOLS.COM
 	 *
 	 * In modern browser or HTML5 the default charset is UTF-8, if you have
-	 * another option it's up to you. Leave it blank it will use charset from
+	 * another option it's up to you. Leave it null it will use charset from
 	 * app/Config/App.php
 	 *
-	 * @var string
+	 * @var string | null
 	 */
 	protected $charset = null;
 
@@ -202,10 +186,10 @@ class AssetsLoader
 	 * to declare the language of the Web page. This is meant to assist
 	 * search engines and browsers. - W3SCHOOLS.COM
 	 *
-	 * You could set this variable as you want. Leave it blank it will use
+	 * You could set this variable as you want. Leave it null it will use
 	 * defaultLocale from app/Config/App.php
 	 *
-	 * @var string
+	 * @var string | null
 	 */
 	protected $language = null;
 
@@ -218,7 +202,7 @@ class AssetsLoader
 	 * optimization (SEO)! The page title is used by search engine algorithms to
 	 * decide the order when listing pages in search results. - W3SCHOOLS.COM
 	 *
-	 * @var string
+	 * @var string | Your Website Title
 	 */
 	protected $title = 'Your Website Title';
 
@@ -227,10 +211,10 @@ class AssetsLoader
 	 * Favicon
 	 * --------------------------------------------------------------------------
 	 *
-	 * Leave it blank it will use default protocol base_url('favicon.ico') or
+	 * Leave it null it will use default protocol base_url('favicon.ico') or
 	 * fill it with your own link and the type attribute will auto detect.
 	 *
-	 * @var string
+	 * @var string | null
 	 */
 	protected $favicon = null;
 
