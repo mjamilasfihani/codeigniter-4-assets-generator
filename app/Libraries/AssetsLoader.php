@@ -202,7 +202,7 @@ class AssetsLoader
 	 * optimization (SEO)! The page title is used by search engine algorithms to
 	 * decide the order when listing pages in search results. - W3SCHOOLS.COM
 	 *
-	 * @var string | Your Website Title
+	 * @var string
 	 */
 	protected $title = 'Your Website Title';
 
