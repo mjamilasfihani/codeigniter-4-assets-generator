@@ -204,7 +204,7 @@ class AssetsLoader
 	 *
 	 * @var string
 	 */
-	protected $title = 'Your Website Title';
+	protected $title = 'Coming Soon - This website under maintenance';
 
 	/**
 	 * --------------------------------------------------------------------------
