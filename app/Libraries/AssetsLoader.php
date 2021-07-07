@@ -1,6 +1,6 @@
 <?php
 
-// Latest Update : v1.1.0
+// Latest Version : 1.1.0
 
 /**
  * MIT License
