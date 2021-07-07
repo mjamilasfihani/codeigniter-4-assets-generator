@@ -7,7 +7,7 @@ class Landing extends BaseController
 
 	public function index()
 	{
-		return $this->__render('landing_message', ['text' => 'Coming Soon']);
+		return $this->__render('_landing_message', ['text' => 'Coming Soon']);
 	}
 
 	//--------------------------------------------------------------------
@@ -19,6 +19,11 @@ class Landing extends BaseController
 
 		// Calling the library
 		$template = new \App\Libraries\AssetsLoader();
+
+		// A little conguration
+		$template->body(['preload' => true]);
+		$template->html(['language' => 'en']);
+		$template->meta(['author' => 'Website Developer']);
 
 		// Render it
 		return $template->render(view($name, $data, $options));
