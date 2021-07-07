@@ -20,9 +20,10 @@ class Landing extends BaseController
 		// Calling the library
 		$template = new \App\Libraries\AssetsLoader();
 
-		// A little re-conguration
+		// A little conguration
 		$template->body(['preload' => true]);
 		$template->html(['language' => 'en']);
+		$template->meta(['author' => 'Website Developer']);
 
 		// Render it
 		return $template->render(view($name, $data, $options));
