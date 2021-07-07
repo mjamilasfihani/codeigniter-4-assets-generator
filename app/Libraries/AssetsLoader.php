@@ -47,7 +47,7 @@ namespace App\Libraries;
  * 		'doctype' => 'html5',
  *		'charset' => null,
  *		'language' => null,
- *		'title' => 'Your Website Title',
+ *		'title' => 'Coming Soon - This website under maintenance',
  *		'favicon' => null
  * ];
  *
