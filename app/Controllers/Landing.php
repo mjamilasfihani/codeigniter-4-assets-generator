@@ -7,7 +7,7 @@ class Landing extends BaseController
 
 	public function index()
 	{
-		return $this->__render('landing_message', ['text' => 'Coming Soon']);
+		return $this->__render('_landing_message', ['text' => 'Coming Soon']);
 	}
 
 	//--------------------------------------------------------------------
