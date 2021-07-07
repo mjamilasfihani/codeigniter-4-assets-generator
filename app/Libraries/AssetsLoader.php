@@ -361,7 +361,7 @@ class AssetsLoader
 
 		if ($this->preload == true)
 		{
-			$str .= '<div class="preloader"> <div class="loading"> <img src="https://cdn.jsdelivr.net/gh/mjamilasfihani/ui/astoart.com/img/loading.gif" width="86"> <p style="font-size: 1.0rem">Please Wait</p> </div> </div>';
+			$str .= '<div class="preloader"><div class="loading"><img src="https://cdn.jsdelivr.net/gh/mjamilasfihani/ui/astoart.com/img/loading.gif" width="86"><p style="font-size: 1.0rem">Please Wait</p></div></div>';
 		}
 
 		return $str;
