@@ -29,8 +29,8 @@ namespace App\Libraries;
 /**
  * Prototype
  *
- * $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.css'];
- * $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.js'];
+ * $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'];
+ * $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'];
  * $jquery = 'https://code.jquery.com/jquery-3.6.0.min.js';
  *
  * $template = new \App\Libraries\AssetsLoader($css, $js, $jquery);
@@ -81,7 +81,7 @@ class AssetsLoader
 	 *
 	 * @var const VERSION
 	 */
-	const VERSION = '1.1.0';
+	const VERSION = '1.2.0';
 
 	/**
 	 * Default CSS
@@ -91,7 +91,7 @@ class AssetsLoader
 	 *
 	 * @var array | empty
 	 */
-	protected $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.css'];
+	protected $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'];
 
 	/**
 	 * Default JS
@@ -101,7 +101,7 @@ class AssetsLoader
 	 *
 	 * @var array | empty
 	 */
-	protected $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.js'];
+	protected $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'];
 
 	/**
 	 * Default jQuery
@@ -245,12 +245,12 @@ class AssetsLoader
 	protected $meta =
 	[
 		'description' => '',
-		'keywords' => [],
-		'author' => '',
-		'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
+		'keywords'    => [],
+		'author'      => '',
+		'viewport'    => 'width=device-width, initial-scale=1, shrink-to-fit=no',
 
-		'http-equiv' => [],
-		'property' => []
+		'http-equiv'  => [],
+		'property'    => []
 	];
 
 	/**
@@ -310,25 +310,25 @@ class AssetsLoader
 	{
 		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"><head><meta charset="' . $this->charset . '">';
 
-		if (empty($this->_metaFilterName($this->meta)) === false)
+		if (empty($meta = $this->_metaFilterName($this->meta)) === false)
 		{
-			foreach ($this->_metaFilterName($this->meta) as $name => $value)
+			foreach ($meta as $name => $value)
 			{
 				$str .= $this->_metaTagGenerator($name, $value);
 			}
 		}
 
-		if (empty($this->meta['http-equiv']) === false)
+		if (empty($meta = $this->meta['http-equiv']) === false)
 		{
-			foreach ($this->meta['http-equiv'] as $name => $value)
+			foreach ($meta as $name => $value)
 			{
 				$str .= $this->_metaTagGenerator($name, $value, 'http-equiv');
 			}
 		}
 
-		if (empty($this->meta['property']) === false)
+		if (empty($meta = $this->meta['property']) === false)
 		{
-			foreach ($this->meta['property'] as $name => $value)
+			foreach ($meta as $name => $value)
 			{
 				$str .= $this->_metaTagGenerator($name, $value, 'property');
 			}
@@ -336,11 +336,11 @@ class AssetsLoader
 
 		$str .= link_tag($this->favicon, 'icon', mime_content_type(basename($this->favicon)));
 		
-		if (empty($this->css) === false)
+		if (empty($css = $this->css) === false)
 		{
-			for ($i = 0; $i < count($this->css); $i++)
+			for ($i = 0; $i < count($css); $i++)
 			{
-				$str .= link_tag($this->css[$i]);
+				$str .= link_tag($css[$i]);
 			}
 		}
 
@@ -349,11 +349,11 @@ class AssetsLoader
 			$str .= script_tag($this->jquery);
 		}
 
-		if (empty($this->js) === false)
+		if (empty($js = $this->js) === false)
 		{
-			for ($i = 0; $i < count($this->js); $i++)
+			for ($i = 0; $i < count($js); $i++)
 			{
-				$str .= script_tag($this->js[$i]);
+				$str .= script_tag($js[$i]);
 			}
 		}
 
@@ -449,8 +449,8 @@ class AssetsLoader
 	 */
 	public function body(array $config = [])
 	{
-		$this->attributes = $config['attributes'] ?? $this->attributes;
-		$this->preload = $config['preload'] ?? $this->preload;
+		$this->attributes      = $config['attributes']      ?? $this->attributes;
+		$this->preload         = $config['preload']         ?? $this->preload;
 		$this->cookieBannerURI = $config['cookieBannerURI'] ?? $this->cookieBannerURI;
 	}
 
@@ -461,11 +461,11 @@ class AssetsLoader
 	 */
 	public function html(array $config = [])
 	{
-		$this->doctype = $config['doctype'] ?? $this->doctype;
-		$this->charset = $config['charset'] ?? $this->charset;
+		$this->doctype  = $config['doctype']  ?? $this->doctype;
+		$this->charset  = $config['charset']  ?? $this->charset;
 		$this->language = $config['language'] ?? $this->language;
-		$this->title = $config['title'] ?? $this->title;
-		$this->favicon = $config['favicon'] ?? $this->favicon;
+		$this->title    = $config['title']    ?? $this->title;
+		$this->favicon  = $config['favicon']  ?? $this->favicon;
 	}
 
 	/**
