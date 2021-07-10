@@ -49,13 +49,13 @@ namespace App\Libraries;
  * 		'doctype' => 'html5',
  *		'charset' => null,
  *		'language' => null,
- *		'title' => 'Coming Soon',
+ *		'title' => 'Your Website Title',
  *		'favicon' => null
  * ];
  *
  * $meta =
  * [
- * 		'description' => 'Thank you for visiting our website, currently this website is coming soon.',
+ * 		'description' => '',
  *		'keywords' => [],
  *		'author' => '',
  *		'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
@@ -206,7 +206,7 @@ class AssetsLoader
 	 *
 	 * @var string
 	 */
-	protected $title = 'Coming Soon';
+	protected $title = 'Your Website Title';
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -239,7 +239,7 @@ class AssetsLoader
 	 */
 	protected $meta =
 	[
-		'description' => 'Thank you for visiting our website, currently this website is coming soon.',
+		'description' => '',
 		'keywords' => [],
 		'author' => '',
 		'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
