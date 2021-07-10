@@ -1,7 +1,5 @@
 <?php
 
-// Latest Version : 1.1.0
-
 /**
  * MIT License
  *
@@ -77,6 +75,13 @@ namespace App\Libraries;
 
 class AssetsLoader
 {
+
+	/**
+	 * Assets Loader Version
+	 *
+	 * @var const VERSION
+	 */
+	protected static const VERSION = '1.1.0';
 
 	/**
 	 * Default CSS
