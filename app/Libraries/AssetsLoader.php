@@ -81,7 +81,7 @@ class AssetsLoader
 	 *
 	 * @var const VERSION
 	 */
-	const VERSION = '1.2.0';
+	const VERSION = '1.3.0';
 
 	/**
 	 * Default CSS
