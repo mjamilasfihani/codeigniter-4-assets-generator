@@ -1,4 +1,4 @@
-# CodeIgniter 4 Assets Generator [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/L3L25CC35)
+# CodeIgniter 4 Assets Generator
 
 CSS and JS / assets generator for CodeIgniter 4 (mini version of BHPGenerator).
 
