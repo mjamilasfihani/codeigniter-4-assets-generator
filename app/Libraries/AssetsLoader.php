@@ -73,7 +73,7 @@ namespace App\Libraries;
  * return $template->render(view('welcome_message'));
  */
 
-use App\Config\App;
+use Config\App;
 
 class AssetsLoader
 {
