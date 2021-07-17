@@ -4,15 +4,14 @@ namespace App\Controllers;
 
 class Landing extends BaseController
 {
-
 	public function index()
 	{
-		return $this->__render('_landing_message', ['text' => 'Coming Soon']);
+		return self::render('_landing_message', ['text' => 'Coming Soon']);
 	}
 
 	//--------------------------------------------------------------------
 
-	protected function __render(string $name = '', array $data = [], array $options = [])
+	protected static function render(string $name = '', array $data = [], array $options = [])
 	{
 		// Load the html helper
 		helper('html');
@@ -28,5 +27,4 @@ class Landing extends BaseController
 		// Render it
 		return $template->render(view($name, $data, $options));
 	}
-
 }
