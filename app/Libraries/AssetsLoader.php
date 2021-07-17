@@ -73,15 +73,16 @@ namespace App\Libraries;
  * return $template->render(view('welcome_message'));
  */
 
+use App\Config\App;
+
 class AssetsLoader
 {
-
 	/**
 	 * Assets Loader Version
 	 *
 	 * @var const VERSION
 	 */
-	const VERSION = '1.3.0';
+	const VERSION = '1.3.1';
 
 	/**
 	 * Default CSS
@@ -262,18 +263,18 @@ class AssetsLoader
 	public function __construct(array $css = [], array $js = [], string $jquery = null)
 	{
 		// Load the config from app/Config/App.php
-		$app = config('App');
+		$config = new App();
 
 		// Set the config of charset
 		if ($this->charset == null)
 		{
-			$this->charset = $app->charset;
+			$this->charset = $config->charset;
 		}
 
 		// Set the config of language
 		if ($this->language == null)
 		{
-			$this->language = $app->defaultLocale;
+			$this->language = $config->defaultLocale;
 		}
 
 		// Set the config of favicon
@@ -490,5 +491,4 @@ class AssetsLoader
 	{
 		return $this->__header() . $view . $this->__footer();
 	}
-
 }
