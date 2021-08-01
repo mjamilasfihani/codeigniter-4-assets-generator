@@ -311,25 +311,25 @@ class AssetsLoader
 	{
 		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"><head><meta charset="' . $this->charset . '">';
 
-		if (empty($meta = $this->_metaFilterName($this->meta)) === false)
+		if (empty($this->_metaFilterName($this->meta)) === false)
 		{
-			foreach ($meta as $name => $value)
+			foreach ($this->_metaFilterName($this->meta) as $name => $value)
 			{
 				$str .= $this->_metaTagGenerator($name, $value);
 			}
 		}
 
-		if (empty($meta = $this->meta['http-equiv']) === false)
+		if (empty($this->meta['http-equiv']) === false)
 		{
-			foreach ($meta as $name => $value)
+			foreach ($this->meta['http-equiv'] as $name => $value)
 			{
 				$str .= $this->_metaTagGenerator($name, $value, 'http-equiv');
 			}
 		}
 
-		if (empty($meta = $this->meta['property']) === false)
+		if (empty($this->meta['property']) === false)
 		{
-			foreach ($meta as $name => $value)
+			foreach ($this->meta['property'] as $name => $value)
 			{
 				$str .= $this->_metaTagGenerator($name, $value, 'property');
 			}
@@ -337,11 +337,11 @@ class AssetsLoader
 
 		$str .= link_tag($this->favicon, 'icon', mime_content_type(basename($this->favicon)));
 		
-		if (empty($css = $this->css) === false)
+		if (empty($this->css) === false)
 		{
-			for ($i = 0; $i < count($css); $i++)
+			for ($i = 0; $i < count($this->css); $i++)
 			{
-				$str .= link_tag($css[$i]);
+				$str .= link_tag($this->css[$i]);
 			}
 		}
 
@@ -350,11 +350,11 @@ class AssetsLoader
 			$str .= script_tag($this->jquery);
 		}
 
-		if (empty($js = $this->js) === false)
+		if (empty($this->js) === false)
 		{
-			for ($i = 0; $i < count($js); $i++)
+			for ($i = 0; $i < count($this->js); $i++)
 			{
-				$str .= script_tag($js[$i]);
+				$str .= script_tag($this->js[$i]);
 			}
 		}
 
