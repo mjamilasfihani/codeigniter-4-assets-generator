@@ -407,7 +407,7 @@ class AssetsLoader
 	 * @param  string $type
 	 * @return string
 	 */
-	protected function tag(string $name = '', string $content = '', string $type = 'name')
+	protected function tag(string $name, string $content, string $type = 'name')
 	{
 		$str = '';
 						
@@ -432,7 +432,7 @@ class AssetsLoader
 	 * @param  array $meta
 	 * @return array
 	 */
-	protected function filter(array $meta = [])
+	protected function filter(array $meta)
 	{
 		unset($meta['http-equiv'], $meta['property']);
 
@@ -484,10 +484,10 @@ class AssetsLoader
 	/**
 	 * Render
 	 *
-	 * @param  mix    $view
+	 * @param  string $view
 	 * @return string
 	 */
-	public function render(...$view)
+	public function render($view)
 	{
 		return $this->header() . $view . $this->footer();
 	}
