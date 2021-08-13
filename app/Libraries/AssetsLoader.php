@@ -29,41 +29,41 @@ namespace App\Libraries;
 /**
  * Prototype
  *
- * $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'];
- * $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'];
+ * $css    = ['https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css'];
+ * $js     = ['https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js'];
  * $jquery = 'https://code.jquery.com/jquery-3.6.0.min.js';
  *
  * $template = new \App\Libraries\AssetsLoader($css, $js, $jquery);
  *
  * $body =
  * [
- * 		'attributes' => [],
- *		'preload' => false,
+ * 		'attributes'      => [],
+ *		'preload'         => false,
  *		'cookieBannerURI' => null
  * ];
  *
  * $html =
  * [
- * 		'doctype' => 'html5',
- *		'charset' => null,
+ * 		'doctype'  => 'html5',
+ *		'charset'  => null,
  *		'language' => null,
- *		'title' => 'Your Website Title',
- *		'favicon' => null
+ *		'title'    => 'Your Website Title',
+ *		'favicon'  => null
  * ];
  *
  * $meta =
  * [
  * 		'description' => '',
- *		'keywords' => [],
- *		'author' => '',
- *		'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
+ *		'keywords'    => [],
+ *		'author'      => '',
+ *		'viewport'    => 'width=device-width, initial-scale=1, shrink-to-fit=no',
  *
  *		// @start add another meta with 'name' attribute
  *
  *		// @end
  *
  *		'http-equiv' => [], // this is meta with 'http-equiv' attribute
- *		'property' => []  // this is meta with 'property' attribute
+ *		'property'   => []  // this is meta with 'property' attribute
  * ];
  *
  * $template->body($body);
@@ -82,7 +82,7 @@ class AssetsLoader
 	 *
 	 * @var const VERSION
 	 */
-	const VERSION = '1.3.1';
+	const VERSION = '1.4.2';
 
 	/**
 	 * Default CSS
@@ -92,7 +92,7 @@ class AssetsLoader
 	 *
 	 * @var array | empty
 	 */
-	protected $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'];
+	protected $css = ['https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css'];
 
 	/**
 	 * Default JS
@@ -102,7 +102,7 @@ class AssetsLoader
 	 *
 	 * @var array | empty
 	 */
-	protected $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'];
+	protected $js = ['https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js'];
 
 	/**
 	 * Default jQuery
@@ -263,7 +263,7 @@ class AssetsLoader
 	public function __construct(array $css = [], array $js = [], string $jquery = null)
 	{
 		// Load the config from app/Config/App.php
-		$config = new App();
+		$config = new \Config\App();
 
 		// Set the config of charset
 		if ($this->charset == null)
@@ -307,15 +307,15 @@ class AssetsLoader
 	 *
 	 * @return string
 	 */
-	protected function __header()
+	protected function header()
 	{
 		$str = doctype($this->doctype) . '<html lang="' . $this->language . '"><head><meta charset="' . $this->charset . '">';
 
-		if (empty($this->_metaFilterName($this->meta)) === false)
+		if (empty($this->filter($this->meta)) === false)
 		{
-			foreach ($this->_metaFilterName($this->meta) as $name => $value)
+			foreach ($this->filter($this->meta) as $name => $value)
 			{
-				$str .= $this->_metaTagGenerator($name, $value);
+				$str .= $this->tag($name, $value);
 			}
 		}
 
@@ -323,7 +323,7 @@ class AssetsLoader
 		{
 			foreach ($this->meta['http-equiv'] as $name => $value)
 			{
-				$str .= $this->_metaTagGenerator($name, $value, 'http-equiv');
+				$str .= $this->tag($name, $value, 'http-equiv');
 			}
 		}
 
@@ -331,7 +331,7 @@ class AssetsLoader
 		{
 			foreach ($this->meta['property'] as $name => $value)
 			{
-				$str .= $this->_metaTagGenerator($name, $value, 'property');
+				$str .= $this->tag($name, $value, 'property');
 			}
 		}
 
@@ -378,7 +378,7 @@ class AssetsLoader
 	 *
 	 * @return string
 	 */
-	protected function __footer()
+	protected function footer()
 	{
 		$str = '';
 
@@ -407,7 +407,7 @@ class AssetsLoader
 	 * @param  string $type
 	 * @return string
 	 */
-	protected function _metaTagGenerator(string $name = '', string $content = '', string $type = 'name')
+	protected function tag(string $name, string $content, string $type = 'name')
 	{
 		$str = '';
 						
@@ -432,7 +432,7 @@ class AssetsLoader
 	 * @param  array $meta
 	 * @return array
 	 */
-	protected function _metaFilterName(array $meta = [])
+	protected function filter(array $meta)
 	{
 		unset($meta['http-equiv'], $meta['property']);
 
@@ -489,6 +489,6 @@ class AssetsLoader
 	 */
 	public function render($view)
 	{
-		return $this->__header() . $view . $this->__footer();
+		return $this->header() . $view . $this->footer();
 	}
 }
