@@ -74,7 +74,6 @@ namespace App\Libraries;
  */
 
 use Config\App;
-use Config\Services;
 
 class AssetsLoader
 {
@@ -83,7 +82,7 @@ class AssetsLoader
 	 *
 	 * @var const VERSION
 	 */
-	const VERSION = '1.4.3';
+	const VERSION = '1.4.2';
 
 	/**
 	 * Default CSS
@@ -263,16 +262,19 @@ class AssetsLoader
 	 */
 	public function __construct(array $css = [], array $js = [], string $jquery = null)
 	{
+		// Load the config from app/Config/App.php
+		$config = new \Config\App();
+
 		// Set the config of charset
 		if ($this->charset == null)
 		{
-			$this->charset = (new \Config\App())->charset;
+			$this->charset = $config->charset;
 		}
 
 		// Set the config of language
 		if ($this->language == null)
 		{
-			$this->language = Services::request()->getLocale();
+			$this->language = $config->defaultLocale;
 		}
 
 		// Set the config of favicon
